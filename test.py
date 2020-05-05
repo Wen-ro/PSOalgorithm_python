@@ -7,15 +7,16 @@ import matplotlib.pyplot as plt
 # TO CUSTOMIZE THIS PSO CODE TO SOLVE UNCONSTRAINED OPTIMIZATION PROBLEMS, CHANGE THE PARAMETERS IN THIS SECTION ONLY:
 # THE FOLLOWING PARAMETERS MUST BE CHANGED.
 def objective_function(x):
-    y = 3 * (1 - x[0]) ** 2 * math.exp(-x[0] ** 2 - (x[1] + 1) ** 2) - 10 * (
-                x[0] / 5 - x[0] ** 3 - x[1] ** 5) * math.exp(-x[0] ** 2 - x[1] ** 2) - 1 / 3 * math.exp(
-        -(x[0] + 1) ** 2 - x[1] ** 2)
+    if (x[0] + x[1]) >= -1:
+        y = 6 - ((math.sin(math.sqrt(x[0] ** 2 + x[1] ** 2))) ** 2) / ((1 + 0.1 * (x[0] ** 2 - x[1] ** 2)) ** 8)
+    else:  # add penalty: x+y<-1
+        y = (6 - ((math.sin(math.sqrt(x[0] ** 2 + x[1] ** 2))) ** 2) / ((1 + 0.1 * (x[0] ** 2 - x[1] ** 2)) ** 8)) - 20
     return y
 
 
-bounds = [(-3, 3), (-3, 3)]  # upper and lower bounds of variables
+bounds = [(-1, 3), (-1, 2)]  # upper and lower bounds of variables
 nv = 2  # number of variables
-mm = -1  # if minimization problem, mm = -1; if maximization problem, mm = 1
+mm = 1  # if minimization problem, mm = -1; if maximization problem, mm = 1
 
 # THE FOLLOWING PARAMETERS ARE OPTINAL.
 particle_size = 100  # number of particles
